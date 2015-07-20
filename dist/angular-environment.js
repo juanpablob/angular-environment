@@ -1,0 +1,106 @@
+/**
+ * angular-environment Plugin
+ *
+ * An useful plugin that gives you an opportunity to set up different information
+ * such as api endpoints, urls, variables, etc, based on the context of scripts execution:
+ * development, stage, production or any other custom environment you want to create.
+ *
+ * For more information, issues, etc, check out:
+ * http://github.com/juanpablob/angular-environment
+ */
+
+angular.module('environment', []).
+	provider('environmentService', function() {
+
+		this.environment = 'development'; // default
+		this.data = {}; // user defined environments data
+
+		/**
+		 * config() allow pass as object the
+		 * desired environments with their domains
+		 * and variables
+		 *
+		 * @param {Object} config
+		 * @return {Void}
+		 */
+		this.config = function(config) {
+			this.data = config;
+		};
+
+		/**
+		 * set() set the desired environment
+		 * based on the passed string
+		 *
+		 * @param {String} environment
+		 * @return {Void}
+		 */
+		this.set = function(environment) {
+			this.environment = environment;
+		};
+
+		/**
+		 * get() returns the current environment
+		 *
+		 * @return {Void}
+		 */
+		this.get = function() {
+			return this.environment;
+		};
+
+		/**
+		 * read() returns the desired variable based
+		 * on passed argument
+		 *
+		 * @param {String} variable
+		 * @return {Void}
+		 */
+		this.read = function(variable) {
+			if (variable === 'all') {
+				return this.data.vars[this.get()];
+			}
+			else {
+				return this.data.vars[this.get()][variable];
+			}
+		};
+
+		/**
+		 * is() checks if the passed environment
+		 * matches with the current environment
+		 *
+		 * @param {String} environment
+		 * @return {Boolean}
+		 */
+		this.is = function(environment) {
+			if (environment === this.environment) {
+				return true;
+			}
+			else {
+				return false;
+			}
+		};
+
+		/**
+		 * check() looks for a match between
+		 * the actual domain (where the script is running)
+		 * and any of the domains under env constant in
+		 * order to set the running environment
+		 *
+		 * @return {Void}
+		 */
+		this.check = function() {
+			var	hostname = window.location.hostname,
+					self = this;
+
+			angular.forEach(this.data.domains, function(v, k) {
+				angular.forEach(v, function(v) {
+					if (hostname.search(v) !== -1) {
+						self.environment = k;
+					}
+				});
+			});
+		};
+
+		this.$get = function() {
+			return this;
+		};
+	});

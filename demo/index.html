@@ -1,0 +1,25 @@
+<!doctype html>
+<html class="no-js" lang="en" ng-app="acme">
+	<head>
+		<meta charset="utf-8">
+		<meta http-equiv="x-ua-compatible" content="ie=edge">
+
+		<title>angular-environment</title>
+
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+
+		<script src="//cdnjs.cloudflare.com/ajax/libs/angular.js/1.4.3/angular.min.js"></script>
+		<script src="../dist/angular-environment.js"></script>
+		<script src="app.js"></script>
+	</head>
+
+	<body ng-controller="Pages">
+		<h1>AngularJS Environment Plugin</h1>
+		<p>Let's see if it works</p>
+		<hr>
+		<h3>The current environment is <span style="color: blue;">{{environment}}</span> and this are the their vars</h3>
+		<ul>
+			<li ng-repeat="(k, v) in vars"><code>{{k}} —→ {{v}}</code></li>
+		</ul>
+	</body>
+</html>
