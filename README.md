@@ -22,7 +22,7 @@ Then add `environment` as a dependency for your app:
 angular.module('yourApp', ['environment']);
 ```
 
-## Documentantion
+## Documentation
 
 Sometimes, during the development of our applications, we need to use different variables depending on what context our application is running.
 
