@@ -10,7 +10,7 @@
  */
 
 angular.module('environment', []).
-	provider('environmentService', function() {
+	provider('envService', function() {
 
 		this.environment = 'development'; // default
 		this.data = {}; // user defined environments data
