@@ -1,11 +1,7 @@
 {
   "name": "angular-environment",
-  "version": "0.1.0",
+  "version": "1.0.0",
   "description": "AngujarJS Environment Plugin",
-  "main": "gulpfile.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/juanpablob/angular-environment.git"
@@ -22,7 +18,7 @@
     "url": "https://github.com/juanpablob/angular-environment/issues"
   },
   "homepage": "https://github.com/juanpablob/angular-environment#readme",
-  "dependencies": {
+  "devDependencies": {
     "gulp": "^3.9.0",
     "gulp-concat": "^2.6.0",
     "gulp-jshint": "^1.11.2",
