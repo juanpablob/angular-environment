@@ -126,6 +126,8 @@ var allVars = environmentService.read('all'); // gets all variables configured u
 
 ## To-Do
 
+* Testing
+
 ## Support
 
 To report bugs or request features, please visit the [Issue Tracker](http://github.com/juanpablob/angular-environment/issues).
