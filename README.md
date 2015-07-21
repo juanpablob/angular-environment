@@ -1,5 +1,7 @@
 # AngularJS Environment Plugin
 
+Version 1.0.1
+
 An useful plugin that allows you to set up different variables such as API Url, Sockets, Paths, etc, based on the context of script execution, which means you can set up (for example) different API endpoints depending if you are working on development, stage or production.
 
 ## Installation
