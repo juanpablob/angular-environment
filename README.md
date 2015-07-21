@@ -22,7 +22,7 @@ Then add `environment` as a dependency for your app:
 angular.module('yourApp', ['environment']);
 ```
 
-## Documentantion
+## Documentation
 
 Sometimes, during the development of our applications, we need to use different variables depending on what context our application is running.
 
@@ -46,7 +46,7 @@ angular.module('yourApp', ['environment']).
 		// set the domains and variables for each environment
 		environmentServiceProvider.config({
 			domains: {
-				development: ['dasdsadasd', 'local'],
+				development: ['localhost', 'dev.local'],
 				production: ['acme.com', 'acme.net', 'acme.org']
 				// anotherStage: ['domain1', 'domain2'],
 				// anotherStage: ['domain1', 'domain2']
@@ -77,7 +77,9 @@ angular.module('yourApp', ['environment']).
 	});
 ```
 
-**It's very important** to not use wildcards (`*`) or regex in your environment domains. If you want to match any subdomain (i.e `sub.domain.acme.com`), you should add the main TLD: `acme.com` or `sub.domain.acme.com` in case you want to match the exact domain.
+**For now, it's very important** to not use wildcards (`*`) or regex in your environment domains. If you want to match any subdomain (i.e `sub.domain.acme.com`), you should add the main TLD: `acme.com` or `sub.domain.acme.com` in case you want to match the exact domain.
+
+*In the next release of this plugin you'll be able to add domains using wildcards and regex*
 
 ### Usage
 
@@ -125,6 +127,8 @@ var allVars = environmentService.read('all'); // gets all variables configured u
 ```
 
 ## To-Do
+
+* Support for adding domains with wildcards or regex
 
 ## Support
 

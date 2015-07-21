@@ -5,7 +5,7 @@ angular.module('acme', ['environment']).
 		// set the domains and variables for each environment
 		environmentServiceProvider.config({
 			domains: {
-				development: ['dasdsadasd', 'local'],
+				development: ['localhost', 'dev.local'],
 				production: ['acme.com', 'acme.net', 'acme.org']
 				// anotherStage: []
 			},
