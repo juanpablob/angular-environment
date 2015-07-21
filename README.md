@@ -129,6 +129,7 @@ var allVars = environmentService.read('all'); // gets all variables configured u
 ## To-Do
 
 * Support for adding domains with wildcards or regex
+* Testing
 
 ## Support
 
