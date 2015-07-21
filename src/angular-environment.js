@@ -55,12 +55,11 @@ angular.module('environment', []).
 		 * @return {Void}
 		 */
 		this.read = function(variable) {
-			if (variable === 'all') {
-				return this.data.vars[this.get()];
-			}
-			else {
+			if (variable !== 'all') {
 				return this.data.vars[this.get()][variable];
 			}
+
+			return this.data.vars[this.get()];
 		};
 
 		/**
@@ -71,12 +70,7 @@ angular.module('environment', []).
 		 * @return {Boolean}
 		 */
 		this.is = function(environment) {
-			if (environment === this.environment) {
-				return true;
-			}
-			else {
-				return false;
-			}
+			return (environment === this.environment);
 		};
 
 		/**
