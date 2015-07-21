@@ -1,6 +1,6 @@
 {
   "name": "angular-environment",
-  "version": "0.1",
+  "version": "1.0",
   "homepage": "https://github.com/juanpablob/angular-environment",
   "authors": [
     "juanpablob <m.juanpablob@gmail.com>"
@@ -21,6 +21,6 @@
     "tests"
   ],
   "dependencies": {
-    "angular": "~1.4.3"
+    "angular": ">1.2.0"
   }
 }
