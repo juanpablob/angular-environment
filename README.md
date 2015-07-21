@@ -34,17 +34,17 @@ Said that, let's go to configure the plugin and learn how to use it.
 
 ### Configuration
 
-Once installed, you need to inject the `environmentServiceProvider` into your Angular App config area and then, add your environments under `domains` and `vars` objects, adding also the array of domains which belongs to each environment and also for vars.
+Once installed, you need to inject the `envServiceProvider` into your Angular App config area and then, add your environments under `domains` and `vars` objects, adding also the array of domains which belongs to each environment and also for vars.
 
-Finally, in the same config area, you need to check in what context your application is running, by adding `environmentServiceProvider.check()` which will automatically set the appropriate environment based on given domains.
+Finally, in the same config area, you need to check in what context your application is running, by adding `envServiceProvider.check()` which will automatically set the appropriate environment based on given domains.
 
 Here's a full example:
 
 ```javascript
 angular.module('yourApp', ['environment']).
-	config(function(environmentServiceProvider) {
+	config(function(envServiceProvider) {
 		// set the domains and variables for each environment
-		environmentServiceProvider.config({
+		envServiceProvider.config({
 			domains: {
 				development: ['localhost', 'dev.local'],
 				production: ['acme.com', 'acme.net', 'acme.org']
@@ -73,7 +73,7 @@ angular.module('yourApp', ['environment']).
 
 		// run the environment check, so the comprobation is made
 		// before controllers and services are built
-		environmentServiceProvider.check();
+		envProvider.check();
 	});
 ```
 
@@ -83,10 +83,10 @@ angular.module('yourApp', ['environment']).
 
 ### Usage
 
-In order to read the configured environment variables alongside your Angular App, you need to inject `environmentService` into your controllers or services:
+In order to read the configured environment variables alongside your Angular App, you need to inject `envService` into your controllers or services:
 
 ```javascript
-controller('SomeController', ['$scope', 'environmentService', function($scope, environmentService) {
+controller('SomeController', ['$scope', 'envService', function($scope, envService) {
 	// ...
 }]);
 ```
@@ -94,21 +94,21 @@ controller('SomeController', ['$scope', 'environmentService', function($scope, e
 Returns a string with the current environment
 
 ```javascript
-var environment = environmentService.get(); // gets 'development'
+var environment = envService.get(); // gets 'development'
 ```
 
 #### set(*string[environment]*)
 Sets desired environment. This will overwrite the settled environment during the automatically check in Angular config process (*see Configuration* topic).
 
 ```javascript
-environmentService.set('production'); // will set 'production' as current environment
+envService.set('production'); // will set 'production' as current environment
 ```
 
 #### is(*string[environment]*)
 Returns `true` or `false` if the given environment matches with the current environment.
 
 ```javascript
-if (environmentService.is('production')) {
+if (envService.is('production')) {
 	// actually, the current environment is production
 	// so, let's make some logic only for production environment
 }
@@ -121,9 +121,9 @@ else {
 Returns the desired environment variable. If the argument is `all`, this method will return all variables associated to the current environment.
 
 ```javascript
-var apiUrl = environmentService.read('apiUrl'); // gets '//localhost/api'
+var apiUrl = envService.read('apiUrl'); // gets '//localhost/api'
 
-var allVars = environmentService.read('all'); // gets all variables configured under the current environment
+var allVars = envService.read('all'); // gets all variables configured under the current environment
 ```
 
 ## To-Do
