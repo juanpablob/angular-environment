@@ -1,0 +1,34 @@
+# EditorConfig helps developers define and maintain consistent coding styles between different editors and IDEs
+# http://editorconfig.org
+
+# top-most EditorConfig file
+root = true
+
+[*]
+indent_style = tab
+end_of_line = lf
+charset = utf-8
+trim_trailing_whitespace = true
+insert_final_newline = true
+
+[*.php]
+indent_size = 4
+
+[*.json]
+indent_style = space
+indent_size = 2
+
+[{.jshintrc, .bowerrc, .sailsrc}]
+indent_style = space
+indent_size = 2
+
+[*.js]
+indent_style = tab
+indent_size = 2
+
+[{.css,.sass,*.scss,.styl,.less}]
+indent_style = tab
+indent_size = 2
+
+[*.md]
+trim_trailing_whitespace = false
