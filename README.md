@@ -75,7 +75,7 @@ angular.module('yourApp', ['environment']).
 
 		// run the environment check, so the comprobation is made
 		// before controllers and services are built
-		envProvider.check();
+		envServiceProvider.check();
 	});
 ```
 
@@ -131,6 +131,7 @@ var allVars = envService.read('all'); // gets all variables configured under the
 ## To-Do
 
 * Support for adding domains with wildcards or regex
+* Comprobe Add logic to `check()`
 * Testing
 
 ## Support
