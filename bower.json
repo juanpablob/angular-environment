@@ -1,9 +1,11 @@
 {
   "name": "angular-environment",
-  "version": "1.0.1",
+  "main": "dist/angular-environment.js",
+  "version": "1.0.2",
   "homepage": "https://github.com/juanpablob/angular-environment",
   "authors": [
-    "juanpablob <m.juanpablob@gmail.com>"
+    "juanpablob <m.juanpablob@gmail.com>",
+    "nirarazi <nir.arazi@gmail.com>"
   ],
   "description": "AngularJS Environment Plugin",
   "keywords": [
