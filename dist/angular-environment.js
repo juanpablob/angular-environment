@@ -1,7 +1,7 @@
 /**
  * angular-environment Plugin
  *
- * An useful plugin that gives you an opportunity to set up different information
+ * An useful plugin that allows you to set up different information
  * such as api endpoints, urls, variables, etc, based on the context of scripts execution:
  * development, stage, production or any other custom environment you want to create.
  *
@@ -82,12 +82,12 @@ angular.module('environment', []).
 		 * @return {Void}
 		 */
 		this.check = function() {
-			var	hostname = window.location.hostname,
+			var	location = window.location.href,
 					self = this;
 
 			angular.forEach(this.data.domains, function(v, k) {
 				angular.forEach(v, function(v) {
-					if (hostname.search(v) !== -1) {
+					if (location.match('//' + v)) {
 						self.environment = k;
 					}
 				});
