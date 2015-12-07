@@ -88,7 +88,7 @@ angular.module('environment', []).
 			angular.forEach(this.data.domains, function(v, k) {
 				angular.forEach(v, function(v) {
 					if (location.match('/' + v + '$/')) {
-						self.environment = k;
+						return self.environment = k;
 					}
 				});
 			});
