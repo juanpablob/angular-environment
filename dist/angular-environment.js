@@ -84,8 +84,9 @@ angular.module('environment', []).
 		this.check = function() {
 			var	location = window.location.href,
 					self = this;
-
+			location = location.toLowerCase();
 			angular.forEach(this.data.domains, function(v, k) {
+				v = v.toLowerCase();
 				angular.forEach(v, function(v) {
 					if (location.match('//' + v)) {
 						self.environment = k;
