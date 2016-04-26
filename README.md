@@ -1,6 +1,10 @@
 # AngularJS Environment Plugin
 
-Version 1.0.3
+<p align="left">
+  <a href="https://www.npmjs.com/package/angular-environment"><img src="https://img.shields.io/npm/v/angular-environment.svg?style=flat-square"></a>
+  <a href="http://bower.io/search/?q=angular-environment"><img src="https://img.shields.io/bower/v/angular-environment.svg?style=flat-square"></a>
+  <a href="https://github.com/juanpablob/angular-environment/stargazers"><img src="http://img.shields.io/npm/dm/angular-environment.svg?style=flat-square"></a>
+</p>
 
 An useful plugin that allows you to set up different variables such as API Url, Sockets, Paths, etc, based on the context of script execution, which means you can set up (for example) different API endpoints depending if you are working on development, stage or production.
 
@@ -130,7 +134,7 @@ var allVars = envService.read('all'); // gets all variables configured under the
 
 ## To-Do
 
-* Support for adding domains with wildcards or regex
+* Support for adding domains with wildcards or ~~regex~~
 * Comprobe Add logic to `check()`
 * Testing
 
