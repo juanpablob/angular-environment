@@ -87,7 +87,7 @@ angular.module('environment', []).
 
 			angular.forEach(this.data.domains, function(v, k) {
 				angular.forEach(v, function(v) {
-					if (location.match('//' + v)) {
+					if (location.match(new RegExp("^http(s)?:\/\/" + v))) {
 						self.environment = k;
 					}
 				});
