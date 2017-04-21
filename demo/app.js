@@ -5,9 +5,9 @@ angular.module('acme', ['environment']).
 		// set the domains and variables for each environment
 		envServiceProvider.config({
 			domains: {
-				development: ['localhost', 'dev.local'],
-				production: ['acme.com', 'acme.net', 'acme.org']
-				// anotherStage: []
+				development: ['localhost', 'local.dev'],
+				production: ['acme.com', '*.dev.prod'],
+				test: ['acme.test', 'acme.net', 'acme.*.test']
 			},
 			vars: {
 				development: {
@@ -16,8 +16,13 @@ angular.module('acme', ['environment']).
 					// antoherCustomVar: ''
 				},
 				production: {
-					apiUrl: '//api.acme.com/v2',
-					staticUrl: '//static.acme.com'
+					apiUrl: '//api.acme.dev.prod/v1',
+					staticUrl: '//static.acme.dev.prod'
+					// antoherCustomVar: ''
+				},
+				test: {
+					apiUrl: '//api.acme.dev.test/v1',
+					staticUrl: '//static.acme.test.prod'
 					// antoherCustomVar: ''
 				}
 			}

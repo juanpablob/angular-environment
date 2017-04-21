@@ -12,6 +12,16 @@
 angular.module('environment', []).
 	provider('envService', function() {
 
+		var private = {};
+
+		private.pregQuote = function(string, delimiter) {
+			return (string + '').replace(new RegExp('[.\\\\+*?\\[\\^\\]$(){}=!<>|:\\' + (delimiter || '') + '-]', 'g'), '\\$&');
+		};
+
+		private.stringToRegex = function(string) {
+			return new RegExp(private.pregQuote(string).replace(/\\\*/g, '.*').replace(/\\\?/g, '.'), 'g');
+		};
+
 		this.environment = 'development'; // default
 		this.data = {}; // user defined environments data
 
@@ -82,13 +92,15 @@ angular.module('environment', []).
 		 * @return {Void}
 		 */
 		this.check = function() {
-			var	location = window.location.href,
+			var	location = window.location.host,
 					self = this;
 
 			angular.forEach(this.data.domains, function(v, k) {
 				angular.forEach(v, function(v) {
-					if (location.match('//' + v)) {
+					if (location.match(private.stringToRegex(v))) {
 						self.environment = k;
+
+						return false;
 					}
 				});
 			});
