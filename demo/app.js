@@ -38,8 +38,4 @@ angular.module('acme', ['environment']).
 	}).
 	controller('Pages', ['$scope', 'envService', function($scope, envService) {
 		$scope.environment = envService.get(); // store the current environment
-		$scope.vars = envService.read();
-		$scope.ble = envService.read('pico');
-		console.log('sin argumento devuelve: ' + $scope.vars);
-		console.log('variable no existente devuelve: ' + $scope.ble);
 	}]);
