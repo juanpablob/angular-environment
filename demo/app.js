@@ -11,8 +11,8 @@ angular.module('acme', ['environment']).
 			},
 			vars: {
 				development: {
-					apiUrl: '//localhost/api',
-					staticUrl: '//localhost/static'
+					apiUrl: '//api.acme.dev.local/v1',
+					staticUrl: '//static.acme.dev.local'
 					// antoherCustomVar: ''
 				},
 				production: {
@@ -21,9 +21,13 @@ angular.module('acme', ['environment']).
 					// antoherCustomVar: ''
 				},
 				test: {
-					apiUrl: '//api.acme.dev.test/v1',
-					staticUrl: '//static.acme.test.prod'
+					// apiUrl: '//api.acme.dev.test/v1',
+					staticUrl: '//static.acme.dev.test'
 					// antoherCustomVar: ''
+				},
+				defaults: {
+					apiUrl: '//api.default.com/v1',
+					staticUrl: '//static.default.com/'
 				}
 			}
 		});
@@ -34,5 +38,8 @@ angular.module('acme', ['environment']).
 	}).
 	controller('Pages', ['$scope', 'envService', function($scope, envService) {
 		$scope.environment = envService.get(); // store the current environment
-		$scope.vars = envService.read('all');
+		$scope.vars = envService.read();
+		$scope.ble = envService.read('pico');
+		console.log('sin argumento devuelve: ' + $scope.vars);
+		console.log('variable no existente devuelve: ' + $scope.ble);
 	}]);
