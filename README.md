@@ -55,14 +55,14 @@ angular.module('yourApp', ['environment']).
 		envServiceProvider.config({
 			domains: {
 				development: ['localhost', 'acme.dev.local'],
-				production: ['acme.com', '*.acme.com', 'acme.dev.prod']
+				production: ['acme.com', '*.acme.com', 'acme.dev.prod'],
 				test: ['test.acme.com', 'acme.dev.test', 'acme.*.com'],
 				// anotherStage: ['domain1', 'domain2']
 			},
 			vars: {
 				development: {
 					apiUrl: '//api.acme.dev.local/v1',
-					staticUrl: '//static.acme.dev.local'
+					staticUrl: '//static.acme.dev.local',
 					// antoherCustomVar: 'lorem',
 					// antoherCustomVar: 'ipsum'
 				},
@@ -74,7 +74,7 @@ angular.module('yourApp', ['environment']).
 				}
 				production: {
 					apiUrl: '//api.acme.com/v1',
-					staticUrl: '//static.acme.com'
+					staticUrl: '//static.acme.com',
 					// antoherCustomVar: 'lorem',
 					// antoherCustomVar: 'ipsum'
 				},
