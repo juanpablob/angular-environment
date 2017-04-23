@@ -5,20 +5,29 @@ angular.module('acme', ['environment']).
 		// set the domains and variables for each environment
 		envServiceProvider.config({
 			domains: {
-				development: ['localhost', 'dev.local'],
-				production: ['acme.com', 'acme.net', 'acme.org']
-				// anotherStage: []
+				development: ['localhost', 'local.dev'],
+				production: ['acme.com', '*.dev.prod'],
+				test: ['acme.test', 'acme.net', 'acme.*.test']
 			},
 			vars: {
 				development: {
-					apiUrl: '//localhost/api',
-					staticUrl: '//localhost/static'
+					apiUrl: '//api.acme.dev.local/v1',
+					staticUrl: '//static.acme.dev.local'
 					// antoherCustomVar: ''
 				},
 				production: {
-					apiUrl: '//api.acme.com/v2',
-					staticUrl: '//static.acme.com'
+					apiUrl: '//api.acme.dev.prod/v1',
+					staticUrl: '//static.acme.dev.prod'
 					// antoherCustomVar: ''
+				},
+				test: {
+					// apiUrl: '//api.acme.dev.test/v1',
+					staticUrl: '//static.acme.dev.test'
+					// antoherCustomVar: ''
+				},
+				defaults: {
+					apiUrl: '//api.default.com/v1',
+					staticUrl: '//static.default.com/'
 				}
 			}
 		});
@@ -29,5 +38,8 @@ angular.module('acme', ['environment']).
 	}).
 	controller('Pages', ['$scope', 'envService', function($scope, envService) {
 		$scope.environment = envService.get(); // store the current environment
-		$scope.vars = envService.read('all');
+		$scope.vars = envService.read();
+		$scope.ble = envService.read('pico');
+		console.log('sin argumento devuelve: ' + $scope.vars);
+		console.log('variable no existente devuelve: ' + $scope.ble);
 	}]);
