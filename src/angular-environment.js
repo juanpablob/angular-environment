@@ -12,14 +12,16 @@
 angular.module('environment', []).
 	provider('envService', function() {
 
-		var private = {};
+		'use strict';
 
-		private.pregQuote = function(string, delimiter) {
+		var local = {};
+
+		local.pregQuote = function(string, delimiter) {
 			return (string + '').replace(new RegExp('[.\\\\+*?\\[\\^\\]$(){}=!<>|:\\' + (delimiter || '') + '-]', 'g'), '\\$&');
 		};
 
-		private.stringToRegex = function(string) {
-			return new RegExp(private.pregQuote(string).replace(/\\\*/g, '.*').replace(/\\\?/g, '.'), 'g');
+		local.stringToRegex = function(string) {
+			return new RegExp(local.pregQuote(string).replace(/\\\*/g, '.*').replace(/\\\?/g, '.'), 'g');
 		};
 
 		this.environment = 'development'; // default
@@ -65,11 +67,14 @@ angular.module('environment', []).
 		 * @return {Void}
 		 */
 		this.read = function(variable) {
-			if (variable !== 'all') {
-				return this.data.vars[this.get()][variable];
+			if (typeof variable === 'undefined' || variable === '') {
+				return this.data.vars[this.get()];
+			}
+			else if (typeof this.data.vars[this.get()][variable] === 'undefined') {
+				return this.data.vars.defaults[variable];
 			}
 
-			return this.data.vars[this.get()];
+			return this.data.vars[this.get()][variable];
 		};
 
 		/**
@@ -97,7 +102,7 @@ angular.module('environment', []).
 
 			angular.forEach(this.data.domains, function(v, k) {
 				angular.forEach(v, function(v) {
-					if (location.match(private.stringToRegex(v))) {
+					if (location.match(local.stringToRegex(v))) {
 						self.environment = k;
 
 						return false;
