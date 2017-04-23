@@ -67,7 +67,7 @@ angular.module('environment', []).
 		 * @return {Void}
 		 */
 		this.read = function(variable) {
-			if (typeof variable === 'undefined' || variable === '') {
+			if (typeof variable === 'undefined' || variable === '' || variable === 'all') {
 				return this.data.vars[this.get()];
 			}
 			else if (typeof this.data.vars[this.get()][variable] === 'undefined') {

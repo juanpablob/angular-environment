@@ -38,4 +38,5 @@ angular.module('acme', ['environment']).
 	}).
 	controller('Pages', ['$scope', 'envService', function($scope, envService) {
 		$scope.environment = envService.get(); // store the current environment
+		$scope.vars = envService.read();
 	}]);
