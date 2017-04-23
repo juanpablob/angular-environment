@@ -40,9 +40,11 @@ Said that, let's go to configure the plugin and learn how to use it.
 
 ### Configuration
 
-Once installed, you need to inject the `envServiceProvider` into your Angular App config area and then, add your environments under `domains` and `vars` objects, adding also the array of domains which belongs to each environment and also for vars.
-
-Finally, in the same config area, you need to check in what context your application is running, by adding `envServiceProvider.check()` which will automatically set the appropriate environment based on given domains.
+* Once installed, inject the `envServiceProvider` into your Angular App config area.
+* Organize the environments as you wish under `domains` and `vars` objects.
+* You can use wildcards (`*`) to describe your domains, i.e.: `*.domain.com`.
+* As optional, you can set defaults variables under `defaults` object within `vars`, to catch not-defined variables in the environments.
+* Finally, in the same config area, you will need to check in which context your application is running, by adding `envServiceProvider.check()` which will automatically set the appropriate environment based on given domains.
 
 Here's a full example:
 
@@ -52,28 +54,38 @@ angular.module('yourApp', ['environment']).
 		// set the domains and variables for each environment
 		envServiceProvider.config({
 			domains: {
-				development: ['localhost', 'dev.local'],
-				production: ['acme.com', 'acme.net', 'acme.org']
-				// anotherStage: ['domain1', 'domain2'],
+				development: ['localhost', 'acme.dev.local'],
+				production: ['acme.com', '*.acme.com', 'acme.dev.prod']
+				test: ['test.acme.com', 'acme.dev.test', 'acme.*.com'],
 				// anotherStage: ['domain1', 'domain2']
 			},
 			vars: {
 				development: {
-					apiUrl: '//localhost/api',
-					staticUrl: '//localhost/static'
+					apiUrl: '//api.acme.dev.local/v1',
+					staticUrl: '//static.acme.dev.local'
 					// antoherCustomVar: 'lorem',
 					// antoherCustomVar: 'ipsum'
 				},
-				production: {
-					apiUrl: '//api.acme.com/v2',
-					staticUrl: '//static.acme.com'
+				test: {
+					apiUrl: '//api.acme.dev.test/v1',
+					staticUrl: '//static.acme.dev.test',
 					// antoherCustomVar: 'lorem',
 					// antoherCustomVar: 'ipsum'
 				}
+				production: {
+					apiUrl: '//api.acme.com/v1',
+					staticUrl: '//static.acme.com'
+					// antoherCustomVar: 'lorem',
+					// antoherCustomVar: 'ipsum'
+				},
 				// anotherStage: {
 				// 	customVar: 'lorem',
 				// 	customVar: 'ipsum'
 				// }
+				defaults: {
+					apiUrl: '//api.default.com/v1',
+					staticUrl: '//static.default.com'
+				}
 			}
 		});
 
@@ -82,10 +94,6 @@ angular.module('yourApp', ['environment']).
 		envServiceProvider.check();
 	});
 ```
-
-**For now, it's very important** to not use wildcards (`*`) or regex in your environment domains. If you want to match any subdomain (i.e `sub.domain.acme.com`), you should add the main TLD: `acme.com` or `sub.domain.acme.com` in case you want to match the exact domain.
-
-*In the next release of this plugin you'll be able to add domains using wildcards and regex*
 
 ### Usage
 
@@ -124,19 +132,21 @@ else {
 ```
 
 #### read(*string[var]*)
-Returns the desired environment variable. If the argument is `all`, this method will return all variables associated to the current environment.
+Returns the desired environment variable. If no argument is passed, this method will return all variables associated to the current environment.
 
 ```javascript
 var apiUrl = envService.read('apiUrl'); // gets '//localhost/api'
 
-var allVars = envService.read('all'); // gets all variables configured under the current environment
+var allVars = envService.read(); // gets all variables configured under the current environment
 ```
+
+If the desired variable passed as argument doesn't exists in the current environment, the plugin will check into `defaults` object.
 
 ## To-Do
 
-* Support for adding domains with wildcards or ~~regex~~
-* Comprobe Add logic to `check()`
-* Testing
+* ~~Support for adding domains with wildcards or regex~~.
+* Unit testing.
+* Support for protocols.
 
 ## Support
 
@@ -148,7 +158,7 @@ Please feel free to contribute to the plugin with new issues, requests, unit tes
 
 ## License
 
-Copyright 2015, [Juan Pablo Barrientos Lagos (juanpablob)](http://twitter.com/juanpablob)
+Copyright 2015-2017, [Juan Pablo Barrientos Lagos (juanpablob)](http://twitter.com/juanpablob)
 
 Licensed under [The MIT License](http://www.opensource.org/licenses/mit-license.php)<br/>
 Redistributions of files must retain the above copyright notice.
