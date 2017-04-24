@@ -12,6 +12,18 @@
 angular.module('environment', []).
 	provider('envService', function() {
 
+		'use strict';
+
+		var local = {};
+
+		local.pregQuote = function(string, delimiter) {
+			return (string + '').replace(new RegExp('[.\\\\+*?\\[\\^\\]$(){}=!<>|:\\' + (delimiter || '') + '-]', 'g'), '\\$&');
+		};
+
+		local.stringToRegex = function(string) {
+			return new RegExp(local.pregQuote(string).replace(/\\\*/g, '.*').replace(/\\\?/g, '.'), 'g');
+		};
+
 		this.environment = 'development'; // default
 		this.data = {}; // user defined environments data
 
@@ -55,11 +67,14 @@ angular.module('environment', []).
 		 * @return {Void}
 		 */
 		this.read = function(variable) {
-			if (variable !== 'all') {
-				return this.data.vars[this.get()][variable];
+			if (typeof variable === 'undefined' || variable === '' || variable === 'all') {
+				return this.data.vars[this.get()];
+			}
+			else if (typeof this.data.vars[this.get()][variable] === 'undefined') {
+				return this.data.vars.defaults[variable];
 			}
 
-			return this.data.vars[this.get()];
+			return this.data.vars[this.get()][variable];
 		};
 
 		/**
@@ -82,13 +97,15 @@ angular.module('environment', []).
 		 * @return {Void}
 		 */
 		this.check = function() {
-			var	location = window.location.href,
+			var	location = window.location.host,
 					self = this;
 
 			angular.forEach(this.data.domains, function(v, k) {
 				angular.forEach(v, function(v) {
-					if (location.match('//' + v)) {
+					if (location.match(local.stringToRegex(v))) {
 						self.environment = k;
+
+						return false;
 					}
 				});
 			});
