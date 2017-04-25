@@ -71,7 +71,7 @@ angular.module('yourApp', ['environment']).
 					staticUrl: '//static.acme.dev.test',
 					// antoherCustomVar: 'lorem',
 					// antoherCustomVar: 'ipsum'
-				}
+				},
 				production: {
 					apiUrl: '//api.acme.com/v1',
 					staticUrl: '//static.acme.com',
@@ -81,7 +81,7 @@ angular.module('yourApp', ['environment']).
 				// anotherStage: {
 				// 	customVar: 'lorem',
 				// 	customVar: 'ipsum'
-				// }
+				// },
 				defaults: {
 					apiUrl: '//api.default.com/v1',
 					staticUrl: '//static.default.com'
