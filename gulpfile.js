@@ -44,6 +44,8 @@ gulp.task('default', function() {
 // Build for dist
 gulp.task('build', function() {
 	gulp.src(src + '/**/*.js')
+		.pipe($.stripDebug())
+		.pipe(gulp.dest(dist + '/'))
 		.pipe($.jsmin())
 		.pipe($.rename({suffix: '.min'}))
 		.pipe(gulp.dest(dist + '/'));
