@@ -118,7 +118,8 @@ angular.module('environment', []).
 					if (location === v.domain) {
 						keepGoing = false;
 					}
-					console.log(v.domain);
+
+					void 0;
 					self.environment = v.environment;
 				}
 			});
