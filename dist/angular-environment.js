@@ -97,17 +97,30 @@ angular.module('environment', []).
 		 * @return {Void}
 		 */
 		this.check = function() {
-			var	location = window.location.host,
-					self = this;
+			var	self = this,
+					location = window.location.host,
+					matches = [],
+					keepGoing = true;
 
 			angular.forEach(this.data.domains, function(v, k) {
 				angular.forEach(v, function(v) {
 					if (location.match(local.stringToRegex(v))) {
-						self.environment = k;
-
-						return false;
+						matches.push({
+							environment: k,
+							domain: v
+						});
 					}
 				});
+			});
+
+			angular.forEach(matches, function(v, k) {
+				if (keepGoing) {
+					if (location === v.domain) {
+						keepGoing = false;
+					}
+					console.log(v.domain);
+					self.environment = v.environment;
+				}
 			});
 		};
 
