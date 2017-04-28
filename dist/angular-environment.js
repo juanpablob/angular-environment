@@ -119,6 +119,7 @@ angular.module('environment', []).
 						keepGoing = false;
 					}
 
+					void 0;
 					self.environment = v.environment;
 				}
 			});
