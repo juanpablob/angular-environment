@@ -2,7 +2,8 @@ module.exports = function (config) {
   config.set({
     plugins: [
       'karma-jasmine',
-      'karma-chrome-launcher'
+      'karma-chrome-launcher',
+      'karma-firefox-launcher'
     ],
     frameworks: ['jasmine'],
     singleRun: false,
