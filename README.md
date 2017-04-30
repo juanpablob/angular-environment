@@ -144,8 +144,8 @@ If the desired variable passed as argument doesn't exists in the current environ
 
 ## To-Do
 
-* ~~Support for adding domains with wildcards or regex~~.
-* Unit testing.
+* √ ~~Support for adding domains with wildcards or regex~~.
+* √ ~~Unit testing~~.
 * Support for protocols.
 
 ## Support
