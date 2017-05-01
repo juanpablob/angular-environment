@@ -30,14 +30,18 @@ describe('Test environment provider', function () {
 			theEnvServiceProvider.config({
 				domains: {
 					development: ['localhost'],
-					production: ['app.*.com']
+					production: ['app.*.com', 'app.web.co.uk']
 				},
 				vars: {
 					development: {
-						backend: 'https://backend-dev/'
+						backend: 'https://backend-dev/',
+						authServiceUrl: 'https://auth-server-dev/'
 					},
 					production: {
 						backend: 'https://backend/'
+					},
+					defaults: {
+						authServiceUrl: 'https://auth-server/'
 					}
 				}
 			});
@@ -71,6 +75,34 @@ describe('Test environment provider', function () {
 			envService.set('production');
 			expect(envService.read('backend')).toBe('https://backend/');
 		});
+
+		it('tests the correct environment is identified by name using is method', function () {
+			expect(envService.is('development')).toBe(true);
+			expect(envService.is('production')).toBe(false);
+			envService.set('production');
+			expect(envService.is('development')).toBe(false);
+			expect(envService.is('production')).toBe(true);
+		});
+
+		(function () {
+			var i = 0, args = [undefined, '', 'all'];
+
+			for (i = 0; i < args.length; i++) {
+				it('tests all config is returned if read(' + args[i] + ') is called', function () {
+					var config = envService.read(args[i]);
+					expect(Object.keys(config).length).toBe(2);
+					expect(config.authServiceUrl).toBe('https://auth-server-dev/');
+					expect(config.backend).toBe('https://backend-dev/');
+				});
+			}
+		})();
+
+		it('tests default value should be chosen from config if value is undefined for the environment',
+			function () {
+				expect(envService.read('authServiceUrl')).toBe('https://auth-server-dev/');
+				envService.set('production');
+				expect(envService.read('authServiceUrl')).toBe('https://auth-server/');
+			});
 	});
 
 	describe('tests matching domains', function () {
