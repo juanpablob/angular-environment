@@ -24,7 +24,7 @@ angular.module('environment', []).
 			return new RegExp(local.pregQuote(string).replace(/\\\*/g, '.*').replace(/\\\?/g, '.'), 'g');
 		};
 
-		this.environment = 'development'; // default
+		this.environment = 'defaults'; // default
 		this.data = {}; // user defined environments data
 
 		/**
