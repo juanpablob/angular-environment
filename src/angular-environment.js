@@ -10,122 +10,143 @@
  */
 
 angular.module('environment', []).
-	provider('envService', function() {
+  provider('envService', function() {
 
-		'use strict';
+    'use strict';
 
-		var local = {};
+    var local = {};
 
-		local.pregQuote = function(string, delimiter) {
-			return (string + '').replace(new RegExp('[.\\\\+*?\\[\\^\\]$(){}=!<>|:\\' + (delimiter || '') + '-]', 'g'), '\\$&');
-		};
+    local.pregQuote = function(string, delimiter) {
+      return (string + '').replace(new RegExp('[.\\\\+*?\\[\\^\\]$(){}=!<>|:\\' + (delimiter || '') + '-]', 'g'), '\\$&');
+    };
 
-		local.stringToRegex = function(string) {
-			return new RegExp(local.pregQuote(string).replace(/\\\*/g, '.*').replace(/\\\?/g, '.'), 'g');
-		};
+    local.stringToRegex = function(string) {
+      return new RegExp(local.pregQuote(string).replace(/\\\*/g, '.*').replace(/\\\?/g, '.'), 'g');
+    };
 
-		this.environment = 'development'; // default
-		this.data = {}; // user defined environments data
+    // https://stackoverflow.com/a/383245/2441641
+    local.mergeObjects = function MergeRecursive(obj1, obj2) {
+      for (var p in obj2) {
+        try {
+          // Property in destination object set; update its value.
+          if ( obj2[p].constructor==Object ) {
+            obj1[p] = MergeRecursive(obj1[p], obj2[p]);
 
-		/**
-		 * config() allow pass as object the
-		 * desired environments with their domains
-		 * and variables
-		 *
-		 * @param {Object} config
-		 * @return {Void}
-		 */
-		this.config = function(config) {
-			this.data = config;
-		};
+          } else {
+            obj1[p] = obj2[p];
 
-		/**
-		 * set() set the desired environment
-		 * based on the passed string
-		 *
-		 * @param {String} environment
-		 * @return {Void}
-		 */
-		this.set = function(environment) {
-			this.environment = environment;
-		};
+          }
 
-		/**
-		 * get() returns the current environment
-		 *
-		 * @return {Void}
-		 */
-		this.get = function() {
-			return this.environment;
-		};
+        } catch(e) {
+          // Property in destination object not set; create it and set its value.
+          obj1[p] = obj2[p];
+        }
+      }
+      return obj1;
+    };
 
-		/**
-		 * read() returns the desired variable based
-		 * on passed argument
-		 *
-		 * @param {String} variable
-		 * @return {Void}
-		 */
-		this.read = function(variable) {
-			if (typeof variable === 'undefined' || variable === '' || variable === 'all') {
-				return this.data.vars[this.get()];
-			}
-			else if (typeof this.data.vars[this.get()][variable] === 'undefined') {
-				return this.data.vars.defaults[variable];
-			}
+    this.environment = 'development'; // default
+    this.data = {}; // user defined environments data
 
-			return this.data.vars[this.get()][variable];
-		};
+    /**
+     * config() allow pass as object the
+     * desired environments with their domains
+     * and variables
+     *
+     * @param {Object} config
+     * @return {Void}
+     */
+    this.config = function(config) {
+      this.data = local.mergeObjects(this.data, config);
+    };
 
-		/**
-		 * is() checks if the passed environment
-		 * matches with the current environment
-		 *
-		 * @param {String} environment
-		 * @return {Boolean}
-		 */
-		this.is = function(environment) {
-			return (environment === this.environment);
-		};
+    /**
+     * set() set the desired environment
+     * based on the passed string
+     *
+     * @param {String} environment
+     * @return {Void}
+     */
+    this.set = function(environment) {
+      this.environment = environment;
+    };
 
-		/**
-		 * check() looks for a match between
-		 * the actual domain (where the script is running)
-		 * and any of the domains under env constant in
-		 * order to set the running environment
-		 *
-		 * @return {Void}
-		 */
-		this.check = function() {
-			var	self = this,
-					location = window.location.host,
-					matches = [],
-					keepGoing = true;
+    /**
+     * get() returns the current environment
+     *
+     * @return {Void}
+     */
+    this.get = function() {
+      return this.environment;
+    };
 
-			angular.forEach(this.data.domains, function(v, k) {
-				angular.forEach(v, function(v) {
-					if (location.match(local.stringToRegex(v))) {
-						matches.push({
-							environment: k,
-							domain: v
-						});
-					}
-				});
-			});
+    /**
+     * read() returns the desired variable based
+     * on passed argument
+     *
+     * @param {String} variable
+     * @return {Void}
+     */
+    this.read = function(variable) {
+      if (typeof variable === 'undefined' || variable === '' || variable === 'all') {
+        return this.data.vars[this.get()];
+      }
+      else if (typeof this.data.vars[this.get()][variable] === 'undefined') {
+        return this.data.vars.defaults[variable];
+      }
 
-			angular.forEach(matches, function(v, k) {
-				if (keepGoing) {
-					if (location === v.domain) {
-						keepGoing = false;
-					}
+      return this.data.vars[this.get()][variable];
+    };
 
-					console.log(v.domain);
-					self.environment = v.environment;
-				}
-			});
-		};
+    /**
+     * is() checks if the passed environment
+     * matches with the current environment
+     *
+     * @param {String} environment
+     * @return {Boolean}
+     */
+    this.is = function(environment) {
+      return (environment === this.environment);
+    };
 
-		this.$get = function() {
-			return this;
-		};
-	});
+    /**
+     * check() looks for a match between
+     * the actual domain (where the script is running)
+     * and any of the domains under env constant in
+     * order to set the running environment
+     *
+     * @return {Void}
+     */
+    this.check = function() {
+      var self = this,
+        location = window.location.host,
+        matches = [],
+        keepGoing = true;
+
+      angular.forEach(this.data.domains, function(v, k) {
+        angular.forEach(v, function(v) {
+          if (location.match(local.stringToRegex(v))) {
+            matches.push({
+              environment: k,
+              domain: v
+            });
+          }
+        });
+      });
+
+      angular.forEach(matches, function(v, k) {
+        if (keepGoing) {
+          if (location === v.domain) {
+            keepGoing = false;
+          }
+
+          console.log(v.domain);
+          self.environment = v.environment;
+        }
+      });
+    };
+
+    this.$get = function() {
+      return this;
+    };
+  });
