@@ -123,7 +123,6 @@ angular.module('environment', []).
 						keepGoing = false;
 					}
 
-					console.log(v.domain);
 					self.environment = v.environment;
 				}
 			});
