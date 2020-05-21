@@ -8,6 +8,8 @@
 
 An useful plugin that allows you to set up different variables such as API Url, Sockets, Paths, etc, based on the context of script execution, which means you can set up (for example) different API endpoints depending if you are working on development, stage or production.
 
+⚠️**Warning / Heads up!** Although this plugin works and it does the job, it has been out of development since a while now and it's no longer maintained other than people and community contributions / pull requests.
+
 ## Installation
 
 You can install this package either with `npm` or with `bower`.
