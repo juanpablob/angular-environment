@@ -24,10 +24,11 @@ angular.module('environment', []).
 			return new RegExp(local.pregQuote(string).replace(/\\\*/g, '.*').replace(/\\\?/g, '.'), 'g');
 		};
 
-		local.hasChecked = false; // true iff the check() function has been called at least once
+		this.environment = 'defaults'; // default
+  
+		local.hasChecked = false; // true if the check() function has been called at least once
 		local.host = undefined; // the host URL of the current page
 
-		this.environment = 'development'; // default
 		this.data = {}; // user defined environments data
 
 		/**
