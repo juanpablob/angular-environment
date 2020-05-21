@@ -31,10 +31,6 @@ angular.module('acme', ['environment']).
 				}
 			}
 		});
-
-		// run the environment check, so the comprobation is made
-		// before controllers and services are built
-		envServiceProvider.check();
 	}).
 	controller('Pages', ['$scope', 'envService', function($scope, envService) {
 		$scope.environment = envService.get(); // store the current environment

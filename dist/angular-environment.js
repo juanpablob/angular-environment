@@ -24,6 +24,9 @@ angular.module('environment', []).
 			return new RegExp(local.pregQuote(string).replace(/\\\*/g, '.*').replace(/\\\?/g, '.'), 'g');
 		};
 
+		local.hasChecked = false; // true iff the check() function has been called at least once
+		local.host = undefined; // the host URL of the current page
+
 		this.environment = 'development'; // default
 		this.data = {}; // user defined environments data
 
@@ -98,7 +101,7 @@ angular.module('environment', []).
 		 */
 		this.check = function() {
 			var	self = this,
-					location = window.location.host,
+					location = local.host ? local.host : window.location.host,
 					matches = [],
 					keepGoing = true;
 
@@ -123,9 +126,16 @@ angular.module('environment', []).
 					self.environment = v.environment;
 				}
 			});
+
+			local.hasChecked = true;
 		};
 
-		this.$get = function() {
+		this.$get = function($location) {
+			if (!local.hasChecked) {
+				local.host = $location.host();
+				this.check();
+			}
 			return this;
 		};
+		this.$get.$inject = ['$location'];
 	});
